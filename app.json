@@ -1,7 +1,11 @@
 {
   "expo": {
-    "name": "gerador-senhas",
-    "slug": "gerador-senhas",
-    "version": "1.0.0"
+    "name": "Gerenciador de Senhas",
+    "slug": "gerenciador-de-senhas",
+    "extra": {
+      "eas": {
+        "projectId": "8fe0fe70-8b1a-4489-9019-0942f7f66de5"
+      }
+    }
   }
 }
