@@ -4,8 +4,9 @@
     "slug": "gerenciador-de-senhas",
     "extra": {
       "eas": {
-        "projectId": "8fe0fe70-8b1a-4489-9019-0942f7f66de5"
+        "projectId": "563d81df-6032-42e2-9078-c547a6b3c02b"
       }
-    }
+    },
+    "owner": "sysbietec"
   }
 }
