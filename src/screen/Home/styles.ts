@@ -103,7 +103,7 @@ export const styles = StyleSheet.create({
   input: {
     height: 50,
     width: '90%',
-    borderColor: '#CCC',
+    borderColor: '#6C63FF', // Bordas com maior contraste
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 15,
@@ -111,6 +111,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 18,
     elevation: 2,
+    color: '#333333', // Texto mais escuro para maior contraste
   },
   actionButtons: {
     flexDirection: 'row',
@@ -124,42 +125,41 @@ export const styles = StyleSheet.create({
     marginHorizontal: 5,
     alignItems: 'center',
   },
- 
-actionButtonsContainer: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  marginTop: 10,
-},
-smallActionButton: {
-  flex: 1,
-  backgroundColor: '#6C63FF',
-  paddingVertical: 10,
-  borderRadius: 8,
-  marginHorizontal: 5,
-  alignItems: 'center',
-},
-actionButtonText: {
-  color: '#FFF',
-  fontSize: 12, // Reduzido para melhor ajuste
-  textAlign: 'center',
-  marginTop: 5,
-},
-shareAppButton: {
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: '#6C63FF',
-  padding: 10,
-  borderRadius: 8,
-  marginTop: 10,
-  alignSelf: 'center',
-  width: '90%',
-},
-shareAppButtonText: {
-  color: '#FFF',
-  fontSize: 14,
-  marginLeft: 8,
-  fontWeight: 'bold',
-},
-  
+  actionButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  smallActionButton: {
+    flex: 1,
+    backgroundColor: '#6C63FF',
+    paddingVertical: 10,
+    borderRadius: 8,
+    marginHorizontal: 5,
+    alignItems: 'center',
+  },
+  actionButtonText: {
+    color: '#FFF',
+    fontSize: 12,
+    textAlign: 'center',
+    marginTop: 5,
+  },
+  shareAppButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#6C63FF',
+    padding: 10,
+    height: 48,
+    borderRadius: 8,
+    marginTop: 10,
+    alignSelf: 'center',
+    width: '100%',
+  },
+  shareAppButtonText: {
+    color: '#FFF',
+    fontSize: 14,
+    marginLeft: 8,
+    fontWeight: 'bold',
+  },
 });

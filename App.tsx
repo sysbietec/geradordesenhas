@@ -42,7 +42,7 @@ export default function App() {
         <Stack.Screen
           name="SavedPasswords"
           component={SavedPasswords}
-          options={{ title: 'Senhas Salvas' }}
+          options={{ title: 'Senhas Salvas', headerShown:false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

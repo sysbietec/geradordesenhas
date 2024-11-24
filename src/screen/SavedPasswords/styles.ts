@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
+
 
 export const styles = StyleSheet.create({
   container: {
@@ -6,6 +7,18 @@ export const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    width: 48, // Largura recomendada
+    height: 48, // Altura recomendada
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 24,
+    elevation: 2, // Sombra leve
   },
   title: {
     fontSize: 36,
@@ -15,19 +28,19 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   savedPassword: {
-    flexDirection: 'row', // Permite alinhar informações e ícones na mesma linha
-    justifyContent: 'space-between', // Espaço entre o texto e os ícones
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#FFF',
     borderRadius: 8,
     padding: 15,
     marginBottom: 10,
-    elevation: 2, // Sombra leve
-    width: '90%',
+    elevation: 2,
+    width: '100%',
     alignSelf: 'center',
   },
   passwordInfo: {
-    flex: 1, // Faz com que o texto ocupe o máximo de espaço disponível
+    flex: 1,
     marginRight: 10,
   },
   passwordName: {
@@ -41,15 +54,19 @@ export const styles = StyleSheet.create({
     color: '#333',
   },
   iconGroup: {
-    flexDirection: 'row', // Organiza os ícones lado a lado
+    flexDirection: 'row',
     alignItems: 'center',
   },
   iconButton: {
-    padding: 8,
-    borderRadius: 8,
-    marginLeft: 10, // Espaçamento entre os ícones
-    backgroundColor: '#FFF',
-    elevation: 1, // Sombra leve para o botão
+      justifyContent:'center',
+      marginLeft:15,
+      alignItems:'center',
+      backgroundColor:'#fff',
+      padding:10,
+      width:48,
+      height:48,
+      borderRadius:5,
+      elevation:3
   },
   deleteButton: {
     backgroundColor: '#FF6B6B',
@@ -59,7 +76,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 3, // Sombra leve
+    elevation: 3,
   },
   deleteButtonText: {
     color: '#FFF',
@@ -71,8 +88,5 @@ export const styles = StyleSheet.create({
     color: '#999',
     textAlign: 'center',
     marginTop: 20,
-  },
-  flatList: {
-    width: '100%',
   },
 });

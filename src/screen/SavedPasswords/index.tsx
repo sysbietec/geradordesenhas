@@ -3,12 +3,13 @@ import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
+import { useNavigation } from '@react-navigation/native'; // Importa o hook useNavigation
 import { styles } from './styles';
 
 export const SavedPasswords = () => {
   const [passwords, setPasswords] = useState<{ name: string; password: string }[]>([]);
+  const navigation = useNavigation(); // Define a navegação
 
-  // Carregar as senhas salvas
   useEffect(() => {
     const fetchPasswords = async () => {
       const savedPasswords = (await AsyncStorage.getItem('passwords')) || '[]';
@@ -17,7 +18,6 @@ export const SavedPasswords = () => {
     fetchPasswords();
   }, []);
 
-  // Excluir todas as senhas
   const deletePasswords = async () => {
     try {
       await AsyncStorage.removeItem('passwords');
@@ -28,7 +28,6 @@ export const SavedPasswords = () => {
     }
   };
 
-  // Excluir uma senha individual
   const deletePassword = async (index: number) => {
     try {
       const updatedPasswords = [...passwords];
@@ -43,7 +42,6 @@ export const SavedPasswords = () => {
     }
   };
 
-  // Copiar uma senha para a área de transferência
   const copyToClipboard = (password: string) => {
     Clipboard.setString(password);
     Alert.alert('Sucesso', 'Senha copiada para a área de transferência!');
@@ -51,6 +49,11 @@ export const SavedPasswords = () => {
 
   return (
     <View style={styles.container}>
+      {/* Botão de voltar */}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Icon name="arrow-left" size={24} color="#6C63FF" />
+      </TouchableOpacity>
+
       <Text style={styles.title}>Senhas Salvas</Text>
 
       {passwords.length === 0 ? (
@@ -67,7 +70,6 @@ export const SavedPasswords = () => {
               </View>
 
               <View style={styles.iconGroup}>
-                {/* Ícone de Copiar */}
                 <TouchableOpacity
                   style={styles.iconButton}
                   onPress={() => copyToClipboard(item.password)}
@@ -75,7 +77,6 @@ export const SavedPasswords = () => {
                   <Icon name="copy" size={20} color="#6C63FF" />
                 </TouchableOpacity>
 
-                {/* Ícone de Excluir */}
                 <TouchableOpacity
                   style={styles.iconButton}
                   onPress={() => deletePassword(index)}
