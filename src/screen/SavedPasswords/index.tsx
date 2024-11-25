@@ -3,12 +3,21 @@ import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
-import { useNavigation } from '@react-navigation/native'; // Importa o hook useNavigation
+import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles';
+import * as Localization from 'expo-localization';
+import { translations } from '../../localization/translations';
+
+const getTranslation = (key: keyof typeof translations['en']): string => {
+  const locales = Localization.getLocales(); 
+  const language = locales[0]?.languageCode as keyof typeof translations;  
+  return translations[language]?.[key] || translations['en'][key];  
+};
+
 
 export const SavedPasswords = () => {
   const [passwords, setPasswords] = useState<{ name: string; password: string }[]>([]);
-  const navigation = useNavigation(); // Define a navegação
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchPasswords = async () => {
@@ -22,9 +31,9 @@ export const SavedPasswords = () => {
     try {
       await AsyncStorage.removeItem('passwords');
       setPasswords([]);
-      Alert.alert('Sucesso', 'Todas as senhas foram apagadas.');
+      Alert.alert(getTranslation('success'), getTranslation('deleteAllSuccess'));
     } catch (error) {
-      Alert.alert('Erro', 'Falha ao apagar as senhas.');
+      Alert.alert(getTranslation('error'), getTranslation('deleteAllError'));
     }
   };
 
@@ -36,28 +45,32 @@ export const SavedPasswords = () => {
       await AsyncStorage.setItem('passwords', JSON.stringify(updatedPasswords));
       setPasswords(updatedPasswords);
 
-      Alert.alert('Sucesso', 'Senha apagada com sucesso.');
+      Alert.alert(getTranslation('success'), getTranslation('deletePasswordSuccess'));
     } catch (error) {
-      Alert.alert('Erro', 'Falha ao apagar a senha.');
+      Alert.alert(getTranslation('error'), getTranslation('deletePasswordError'));
     }
   };
 
   const copyToClipboard = (password: string) => {
     Clipboard.setString(password);
-    Alert.alert('Sucesso', 'Senha copiada para a área de transferência!');
+    Alert.alert(getTranslation('success'), getTranslation('copyToClipboardSuccess'));
   };
 
   return (
     <View style={styles.container}>
-      {/* Botão de voltar */}
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Icon name="arrow-left" size={24} color="#6C63FF" />
-      </TouchableOpacity>
+    <View style={styles.passwordsaveContainer}>
+  {/* Flecha à esquerda */}
+  <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+    <Icon name="arrow-left" size={24} color="#6C63FF" />
+  </TouchableOpacity>
 
-      <Text style={styles.title}>Senhas Salvas</Text>
+  {/* Texto à direita da flecha */}
+  <Text style={styles.title}>{getTranslation('savedPasswords')}</Text>
+</View>
+
 
       {passwords.length === 0 ? (
-        <Text style={styles.listEmptyText}>Nenhuma senha salva.</Text>
+        <Text style={styles.listEmptyText}>{getTranslation('noSavedPasswords')}</Text>
       ) : (
         <FlatList
           data={passwords}
@@ -90,7 +103,7 @@ export const SavedPasswords = () => {
       )}
 
       <TouchableOpacity style={styles.deleteButton} onPress={deletePasswords}>
-        <Text style={styles.deleteButtonText}>Apagar Todas</Text>
+        <Text style={styles.deleteButtonText}>{getTranslation('deleteAllPasswords')}</Text>
       </TouchableOpacity>
     </View>
   );

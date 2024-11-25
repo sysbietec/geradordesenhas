@@ -8,25 +8,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
   },
-  backButton: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    width: 48, // Largura recomendada
-    height: 48, // Altura recomendada
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 24,
-    elevation: 2, // Sombra leve
-  },
-  title: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#6C63FF',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
+ 
   savedPassword: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -89,4 +71,28 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
   },
+  passwordsaveContainer: {
+    flexDirection: 'row', // Alinha os elementos na horizontal
+    alignItems: 'center', // Centraliza verticalmente
+    justifyContent: 'flex-start', // Alinha os elementos à esquerda
+    paddingHorizontal: 20, // Espaçamento nas laterais
+    marginTop: 20, // Espaçamento no topo
+    width: '100%', // Ocupa toda a largura disponível
+    marginBottom:30,
+  },
+  backButton: {
+    marginRight: 10, // Espaçamento entre a flecha e o texto
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    elevation: 2,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#6C63FF',
+  },  
 });

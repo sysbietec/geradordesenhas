@@ -62,4 +62,39 @@ export const styles = StyleSheet.create({
     height: 80,
   },
   
+
+  marca: {
+    fontSize: 22,
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+    color: '#6C63FF',
+    textAlign: 'center',
+    marginTop: 20,
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+  },
+  
+  marcaContainer: {
+    alignSelf: 'center',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  marcaText: {
+    fontSize: 22,
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#FFFFFF', // O texto será branco para contrastar com o gradiente
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+  },
+  title_marca:{
+    color:'#fff',
+    fontSize:16,
+    margin:'auto',
+    marginBottom:10,
+  }
+  
+  
 });

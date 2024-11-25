@@ -7,6 +7,9 @@
         "projectId": "563d81df-6032-42e2-9078-c547a6b3c02b"
       }
     },
-    "owner": "sysbietec"
+    "owner": "sysbietec",
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }

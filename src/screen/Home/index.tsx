@@ -1,18 +1,26 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, BackHandler, TouchableOpacity, TextInput, Alert, Share, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStackParamList } from '../../navigation/types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { styles } from './styles';
-
+import * as Localization from 'expo-localization';
+import { translations } from '../../localization/translations';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+
+const getTranslation = (key: keyof typeof translations['en']): string => {
+  const locales = Localization.getLocales(); 
+  const language = locales[0]?.languageCode as keyof typeof translations;  
+  return translations[language]?.[key] || translations['en'][key];  
+};
+
+
 
 interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
 }
-
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [length, setLength] = useState<number>(8);
@@ -33,16 +41,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const sharePassword = async () => {
     if (!password) {
-      Alert.alert('Erro', 'Gere uma senha antes de compartilhar.');
+      Alert.alert(getTranslation('error'), getTranslation('generatePasswordFirst'));
       return;
     }
 
     try {
       await Share.share({
-        message: `Sua senha gerada é: ${password}`,
+        message: `${getTranslation('yourGeneratedPassword')} ${password}`,
       });
     } catch (error) {
-      Alert.alert('Erro', 'Não foi possível compartilhar a senha.');
+      Alert.alert(getTranslation('error'), getTranslation('sharePasswordError'));
     }
   };
 
@@ -51,16 +59,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
     try {
       await Share.share({
-        message: `Instale este incrível aplicativo para gerar senhas seguras: ${googlePlayLink}`,
+        message: `${getTranslation('shareAppMessage')} ${googlePlayLink}`,
       });
     } catch (error) {
-      Alert.alert('Erro', 'Não foi possível compartilhar o aplicativo.');
+      Alert.alert(getTranslation('error'), getTranslation('shareAppError'));
     }
   };
 
   const savePassword = async () => {
     if (!password) {
-      Alert.alert('Erro', 'Gere uma senha antes de salvar.');
+      Alert.alert(getTranslation('error'), getTranslation('generatePasswordFirst'));
       return;
     }
 
@@ -68,38 +76,34 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       const savedPasswords = (await AsyncStorage.getItem('passwords')) || '[]';
       const passwordsArray = JSON.parse(savedPasswords);
 
-      passwordsArray.push({ name: name || 'Senha Sem Nome', password });
+      passwordsArray.push({ name: name || getTranslation('unnamedPassword'), password });
       await AsyncStorage.setItem('passwords', JSON.stringify(passwordsArray));
 
-      Alert.alert('Sucesso', 'Senha salva com sucesso!');
+      Alert.alert(getTranslation('success'), getTranslation('passwordSaved'));
       setName('');
       setShowNameInput(false);
     } catch (error) {
-      Alert.alert('Erro', 'Falha ao salvar a senha.');
+      Alert.alert(getTranslation('error'), getTranslation('savePasswordError'));
     }
   };
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert('Sair', 'Deseja fechar o aplicativo?', [
+      Alert.alert(getTranslation('exitAppTitle'), getTranslation('exitAppMessage'), [
         {
-          text: 'Cancelar',
+          text: getTranslation('cancel'),
           onPress: () => null,
           style: 'cancel',
         },
-        { text: 'Sim', onPress: () => BackHandler.exitApp() },
+        { text: getTranslation('yes'), onPress: () => BackHandler.exitApp() },
       ]);
-      return true; // Intercepta o botão voltar
+      return true;
     };
 
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    );
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
-    return () => backHandler.remove(); // Remove o evento ao desmontar o componente
+    return () => backHandler.remove();
   }, []);
-
 
   return (
     <>
@@ -111,14 +115,14 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         </View>
 
         {/* Título */}
-        <Text style={styles.title}>Gerador de Senhas</Text>
+        <Text style={styles.title}>{getTranslation('title')}</Text>
 
         {/* Subtítulo */}
-        <Text style={styles.subtitle}>Crie senhas seguras com facilidade</Text>
+        <Text style={styles.subtitle}>{getTranslation('subtitle')}</Text>
 
         {/* Configuração de Tamanho */}
         <View style={styles.card}>
-          <Text style={styles.label}>Tamanho da senha</Text>
+          <Text style={styles.label}>{getTranslation('passwordLength')}</Text>
           <View style={styles.lengthSelector}>
             <TouchableOpacity
               style={styles.roundButton}
@@ -140,7 +144,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
         {/* Gerar Senha */}
         <TouchableOpacity style={styles.generateButton} onPress={generatePassword}>
-          <Text style={styles.buttonText}>Gerar Senha</Text>
+          <Text style={styles.buttonText}>{getTranslation('generatePassword')}</Text>
         </TouchableOpacity>
 
         {/* Resultado */}
@@ -150,7 +154,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             {showNameInput && (
               <TextInput
                 style={styles.input}
-                placeholder="Digite um nome (Opcional)"
+                placeholder={getTranslation('enterName')}
                 value={name}
                 onChangeText={setName}
               />
@@ -162,24 +166,24 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         <View style={styles.actionButtonsContainer}>
           <TouchableOpacity style={styles.smallActionButton} onPress={savePassword}>
             <Icon name="save" size={20} color="#FFF" />
-            <Text style={styles.actionButtonText}>Salvar</Text>
+            <Text style={styles.actionButtonText}>{getTranslation('save')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.smallActionButton} onPress={() => navigation.navigate('SavedPasswords')}>
             <Icon name="folder" size={20} color="#FFF" />
-            <Text style={styles.actionButtonText}>Senhas Salvas</Text>
+            <Text style={styles.actionButtonText}>{getTranslation('savedPasswords')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.smallActionButton} onPress={sharePassword}>
             <Icon name="share-alt" size={20} color="#FFF" />
-            <Text style={styles.actionButtonText}>Compartilhar Senha</Text>
+            <Text style={styles.actionButtonText}>{getTranslation('sharePassword')}</Text>
           </TouchableOpacity>
         </View>
 
         {/* Compartilhar App */}
         <TouchableOpacity style={styles.shareAppButton} onPress={shareApp}>
           <Icon name="share-square" size={20} color="#FFF" />
-          <Text style={styles.shareAppButtonText}>Compartilhar App</Text>
+          <Text style={styles.shareAppButtonText}>{getTranslation('shareApp')}</Text>
         </TouchableOpacity>
       </View>
     </>
